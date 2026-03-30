@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Xin lỗi Vy 💖</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Pacifico', cursive;
+  background: black;
+  transition: background 2s;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 40px;
+  color: white;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+}
+
+button {
+  position: absolute;
+  width: 150px;
+  height: 65px;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+#yesBtn {
+  left: 40%;
+  top: 50%;
+  background: #ff69b4;
+  color: white;
+}
+
+#noBtn {
+  left: 55%;
+  top: 50%;
+  background: #444;
+  color: white;
+}
+
+/* khói */
+.smoke {
+  position: absolute;
+  bottom: -150px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, white, transparent);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: rise 4s linear forwards;
+}
+
+@keyframes rise {
+  100% {
+    transform: translateY(-800px) scale(2);
+    opacity: 0;
+  }
+}
+
+/* text */
+#message {
+  position: absolute;
+  top: 35%;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  color: white;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+/* tim + icon */
+.love {
+  position: absolute;
+  font-size: 20px;
+  animation: float 4s linear infinite;
+}
+
+@keyframes float {
+  100% {
+    transform: translateY(-700px);
+    opacity: 0;
+  }
+}
+
+/* nút tha lỗi */
+#forgiveBtn {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 25px;
+  font-size: 20px;
+  border-radius: 15px;
+  background: white;
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Còn giận t nx khonggggg</h1>
+
+<div class="container">
+  <button id="yesBtn">Hết giận rùi</button>
+  <button id="noBtn">Còn giận</button>
+</div>
+
+<div id="message"></div>
+<button id="forgiveBtn">T tha lỗi cho m đó 🥺😭🙏</button>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+const forgiveBtn = document.getElementById("forgiveBtn");
+
+let scale = 1;
+
+/* nút chạy + làm nút kia to */
+noBtn.addEventListener("click", () => {
+  const x = Math.random() * (window.innerWidth - 150);
+  const y = Math.random() * (window.innerHeight - 100);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+
+  scale += 0.1;
+  yesBtn.style.transform = `scale(${scale})`;
+});
+
+/* bấm hết giận */
+yesBtn.addEventListener("click", () => {
+  document.querySelector(".container").style.display = "none";
+
+  startSmoke();
+
+  setTimeout(() => {
+    document.body.style.background = "pink";
+    startLove();
+    showMessages();
+  }, 2000);
+});
+
+/* khói */
+function startSmoke() {
+  const interval = setInterval(() => {
+    const s = document.createElement("div");
+    s.className = "smoke";
+    s.style.left = Math.random() * window.innerWidth + "px";
+    document.body.appendChild(s);
+
+    setTimeout(() => s.remove(), 4000);
+  }, 200);
+
+  setTimeout(() => clearInterval(interval), 2000);
+}
+
+/* icon bay */
+const icons = ["❤️","💖","💕","💓","💗","💘","💞","💝","😘","😭"];
+
+function startLove() {
+  setInterval(() => {
+    const el = document.createElement("div");
+    el.className = "love";
+    el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+
+    el.style.left = Math.random() * window.innerWidth + "px";
+    el.style.bottom = "0px";
+    el.style.fontSize = (20 + Math.random() * 20) + "px";
+
+    document.body.appendChild(el);
+
+    setTimeout(() => el.remove(), 4000);
+  }, 250);
+}
+
+/* text */
+const texts = [
+  "Cho Tường xin lỗi vì lỡ nói như vậy",
+  "Vy đừng giận Tường nữa :(((",
+  "Tường hứa ko nói như vậy nữa đâuuu",
+  "Lần này Tường sai do ko để ý Vy tha lỗi nha :((("
+];
+
+function showMessages() {
+  let i = 0;
+
+  function next() {
+    if (i >= texts.length) {
+      showForgive();
+      return;
+    }
+
+    message.innerText = texts[i];
+    message.style.opacity = 1;
+
+    setTimeout(() => {
+      message.style.opacity = 0;
+      i++;
+      setTimeout(next, 1000);
+    }, 4000);
+  }
+
+  next();
+}
+
+/* hiện nút tha lỗi */
+function showForgive() {
+  forgiveBtn.style.display = "block";
+}
+
+/* bấm tha lỗi */
+forgiveBtn.addEventListener("click", () => {
+  alert("Vy đã tha lỗi rồi 😭💖 (Tường nhận được rồi nhaaaa)");
+});
+</script>
+
+</body>
+</html>
